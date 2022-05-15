@@ -1,16 +1,33 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+@layer base {
 
-* {
-  box-sizing: border-box;
+
+  body {
+    margin: 0;
+    scroll-behavior: smooth;
+    @apply bg-primary;
+    @apply text-tertiary;
+    @apply font-sans;
+  }
+
+  @font-face {
+    font-family: "Univers";
+    src: url("/fonts/UniversBlack.ttf") format('embedded-opentype');
+  }
+  @font-face {
+    font-family: "Univers";
+    src: url("/fonts/UniversLTStd-Bold.otf") format("opentype");
+  }
+  @font-face {
+    font-family: "Univers";
+    src: url("/fonts/UniversLTStd.otf") format("opentype");
+  }
+  @font-face {
+    font-family: "Univers";
+    src: url("/fonts/Univers-light-normal.ttf") format('embedded-opentype');
+  }
+
 }
