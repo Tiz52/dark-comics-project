@@ -1,10 +1,9 @@
-import {useState, useEffect, FC} from "react";
+import {useState, FC} from "react";
 import {ComicCard} from "../comics";
 import {Filters, SortSelect} from "../commons";
 import {FiltersSide} from "../layouts";
 import {useComics} from "../../hooks";
 import {Loading} from "../ui";
-import {darkComicsApi} from "../../api";
 
 interface Props {
   publishers: string[];
@@ -27,9 +26,6 @@ export const LibrarySection: FC<Props> = ({publishers, characters}) => {
   const handleSortBy = (value: string) => {
     setSortBy(value);
   };
-
-  if (isLoading) return <></>;
-  if (characters.length === 0 || publishers.length === 0) return <></>;
 
   return (
     <div className="flex flex-auto w-full sm:gap-10 md:gap-16 lg:gap-32">
@@ -61,11 +57,13 @@ export const LibrarySection: FC<Props> = ({publishers, characters}) => {
         {isLoading ? (
           <Loading />
         ) : (
-          <div className="grid mt-5 gap-x-12 lg:gap-x-24 gap-y-10 lg:gap-y-16 md:grid-cols-list">
-            {comics!.map((comic) => {
-              return <ComicCard key={comic.title} comic={comic} />;
-            })}
-          </div>
+          comics && (
+            <div className="grid mt-5 gap-x-12 lg:gap-x-24 gap-y-10 lg:gap-y-16 md:grid-cols-list">
+              {comics.map((comic) => {
+                return <ComicCard key={comic.title} comic={comic} />;
+              })}
+            </div>
+          )
         )}
         <div className="flex justify-center mt-10">
           {comics && comics.length % 9 === 0 && (
