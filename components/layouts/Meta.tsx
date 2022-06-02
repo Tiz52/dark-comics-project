@@ -15,8 +15,10 @@ export const Meta: FC<Props> = ({title, pageDescription, imgUrl}) => {
       <meta name="description" content={pageDescription} />
       <meta name="og:title" content={title} />
       <meta name="og:description" content={pageDescription} />
-
-      {imgUrl && <meta name="og:image" content={imgUrl} />}
+      <meta
+        name="og:image"
+        content="https://res.cloudinary.com/tiz52/image/upload/v1654144147/dxnxjscxorygahafbho2.jpg"
+      />
     </Head>
   );
 };
