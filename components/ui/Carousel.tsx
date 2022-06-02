@@ -67,25 +67,25 @@ export const Carousel: FC<Props> = ({comics}) => {
           </svg>
           <span className="sr-only">Prev</span>
         </button>
-        <Swipe
+        {/* <Swipe
           onSwipeLeft={moveNext}
           onSwipeRight={movePrev}
           className="z-10 flex-auto overflow-hidden"
+        > */}
+        <div
+          ref={carousel}
+          className="z-0 flex gap-32 overflow-hidden scroll-smooth snap-x snap-mandatory touch-pan-x"
         >
-          <div
-            ref={carousel}
-            className="z-0 flex gap-32 overflow-hidden scroll-smooth snap-x snap-mandatory touch-pan-x"
-          >
-            {comics.map((comic, index) => (
-              <div
-                key={index}
-                className="shrink-0 w-[calc(100vw-48px)] xs:w-[250px] snap-start "
-              >
-                <ComicCard comic={comic} />
-              </div>
-            ))}
-          </div>
-        </Swipe>
+          {comics.map((comic, index) => (
+            <div
+              key={index}
+              className="shrink-0 w-[calc(100vw-48px)] xs:w-[250px] snap-start "
+            >
+              <ComicCard comic={comic} />
+            </div>
+          ))}
+        </div>
+        {/* </Swipe> */}
 
         <button
           onClick={moveNext}
