@@ -12,7 +12,7 @@
 
 ---
 # :eyes: Demo Website
-👉  demo: https://quantum-ecommerce.now.sh/
+👉  demo: https://dark-comics-project.vercel.app/
 
 # :computer: Technologies
 This project was made using the follow technologies:
