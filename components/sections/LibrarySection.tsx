@@ -18,17 +18,17 @@ export const LibrarySection = () => {
   const [characters, setCharacters] = useState([]);
   const [publishers, setPublishers] = useState([]);
 
-  // useEffect(() => {
-  //   darkComicsApi("/characters").then(({data}) => {
-  //     setCharacters(data);
-  //   });
-  // }, []);
+  useEffect(() => {
+    darkComicsApi("/characters").then(({data}) => {
+      setCharacters(data);
+    });
+  }, []);
 
-  // useEffect(() => {
-  //   darkComicsApi("/publishers").then(({data}) => {
-  //     setPublishers(data);
-  //   });
-  // }, []);
+  useEffect(() => {
+    darkComicsApi("/publishers").then(({data}) => {
+      setPublishers(data);
+    });
+  }, []);
 
   const handleMoreComics = () => {
     setSize(size + 1);
