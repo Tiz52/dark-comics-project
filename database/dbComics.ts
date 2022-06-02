@@ -40,15 +40,21 @@ export const getComicsByTerm = async (term: string): Promise<IComic[]> => {
 
   await db.disconnect();
 
-  // const updatedProducts = products.map((product) => {
-  //   product.images = product.images.map((image) => {
-  //     return image.includes("http")
-  //       ? image
-  //       : `${process.env.HOST_NAME}products/${image}`;
-  //   });
-
-  //   return product;
-  // });
-
   return comics;
+};
+
+export const getPublishersNames = async () => {
+  await db.connect();
+  const publisherFromDB = await Comic.distinct("publisher").lean();
+  await db.disconnect();
+
+  return publisherFromDB;
+};
+
+export const getCharactersNames = async () => {
+  await db.connect();
+  const charactersFromDB = await Comic.distinct("character");
+  await db.disconnect();
+
+  return charactersFromDB;
 };

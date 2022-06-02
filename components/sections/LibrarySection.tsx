@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, FC} from "react";
 import {ComicCard} from "../comics";
 import {Filters, SortSelect} from "../commons";
 import {FiltersSide} from "../layouts";
@@ -6,7 +6,12 @@ import {useComics} from "../../hooks";
 import {Loading} from "../ui";
 import {darkComicsApi} from "../../api";
 
-export const LibrarySection = () => {
+interface Props {
+  publishers: string[];
+  characters: string[];
+}
+
+export const LibrarySection: FC<Props> = ({publishers, characters}) => {
   const [characterFilter, setCharacterFilter] = useState("all");
   const [publisherFilter, setPublisherFilter] = useState("all");
   const [sortBy, setSortBy] = useState("none");
@@ -14,21 +19,6 @@ export const LibrarySection = () => {
     `/comics?character=${characterFilter}&publisher=${publisherFilter}`,
     sortBy,
   );
-
-  const [characters, setCharacters] = useState([]);
-  const [publishers, setPublishers] = useState([]);
-
-  useEffect(() => {
-    darkComicsApi("/characters").then(({data}) => {
-      setCharacters(data);
-    });
-  }, []);
-
-  useEffect(() => {
-    darkComicsApi("/publishers").then(({data}) => {
-      setPublishers(data);
-    });
-  }, []);
 
   const handleMoreComics = () => {
     setSize(size + 1);
