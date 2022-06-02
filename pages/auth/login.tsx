@@ -181,7 +181,7 @@ const LoginPage = () => {
               <a className="text-secondary">Registrate</a>
             </Link>
           </div>
-          <div className="flex flex-col items-center mb-5">
+          {/* <div className="flex flex-col items-center mb-5">
             {Object.values(providers).map((provider: any) => {
               if (provider.name === "credentials")
                 return <div key="credentials"></div>;
@@ -199,7 +199,7 @@ const LoginPage = () => {
                 </button>
               );
             })}
-          </div>
+          </div> */}
         </div>
       </div>
     </AuthLayout>
