@@ -27,6 +27,7 @@ export const ComicCard: FC<Props> = ({comic}) => {
           objectFit="cover"
           quality={50}
           className="fadeIn"
+          priority
           fallback="https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"
         />
         <div
