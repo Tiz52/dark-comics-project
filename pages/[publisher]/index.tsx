@@ -11,8 +11,6 @@ interface Props {
 }
 
 const PublisherPage: FC<Props> = ({publisher}) => {
-  const bgImage = `url('/publishers/${publisher.banner}.jpg')`;
-
   return (
     <PageLayout
       title={publisher.name}

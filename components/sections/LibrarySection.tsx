@@ -37,6 +37,10 @@ export const LibrarySection = () => {
   const handleSortBy = (value: string) => {
     setSortBy(value);
   };
+
+  if (isLoading) return <></>;
+  if (characters.length === 0 || publishers.length === 0) return <></>;
+
   return (
     <div className="flex flex-auto w-full sm:gap-10 md:gap-16 lg:gap-32">
       <div className="sticky self-start hidden w-1/4 top-14 lg:w-1/5 sm:block">
