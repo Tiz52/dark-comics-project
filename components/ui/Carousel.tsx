@@ -1,7 +1,8 @@
 import {useState, useRef, useEffect, FC} from "react";
-import Swipe from "react-easy-swipe";
+
 import {IComic} from "../../interfaces";
 import {ComicCard} from "../comics";
+import {useSwipeable} from "react-swipeable";
 
 const GAP_WIDTH = 128;
 
@@ -13,6 +14,14 @@ export const Carousel: FC<Props> = ({comics}) => {
   const maxScrollWidth = useRef(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const carousel = useRef<HTMLDivElement>(null);
+
+  const handlers = useSwipeable({
+    onSwipedLeft: () => moveNext(),
+    onSwipedRight: () => movePrev(),
+    swipeDuration: 500,
+    preventScrollOnSwipe: true,
+    trackMouse: true,
+  });
 
   const movePrev = () => {
     if (currentIndex <= 0) {
@@ -67,26 +76,21 @@ export const Carousel: FC<Props> = ({comics}) => {
           </svg>
           <span className="sr-only">Prev</span>
         </button>
-        {/* <Swipe
-          onSwipeLeft={moveNext}
-          onSwipeRight={movePrev}
-          className="z-10 flex-auto overflow-hidden"
-        > */}
-        <div
-          ref={carousel}
-          className="z-0 flex gap-32 overflow-hidden scroll-smooth snap-x snap-mandatory touch-pan-x"
-        >
-          {comics.map((comic, index) => (
-            <div
-              key={index}
-              className="shrink-0 w-[calc(100vw-48px)] xs:w-[250px] snap-start "
-            >
-              <ComicCard comic={comic} />
-            </div>
-          ))}
+        <div {...handlers} className="z-10 flex-auto overflow-hidden">
+          <div
+            ref={carousel}
+            className="z-0 flex gap-32 overflow-hidden scroll-smooth snap-x snap-mandatory touch-pan-x"
+          >
+            {comics.map((comic, index) => (
+              <div
+                key={index}
+                className="shrink-0 w-[calc(100vw-48px)] xs:w-[250px] snap-start "
+              >
+                <ComicCard comic={comic} />
+              </div>
+            ))}
+          </div>
         </div>
-        {/* </Swipe> */}
-
         <button
           onClick={moveNext}
           className="hidden w-10 text-center transition-all duration-300 ease-in-out xs:block text-tertiary hover:text-white disabled:opacity-25 disabled:cursor-not-allowed"
