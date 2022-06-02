@@ -12,6 +12,7 @@
 
 ---
 # :eyes: Demo Website
+👉  demo: https://dark-comics.herokuapp.com/
 👉  demo: https://dark-comics-project.vercel.app/
 
 # :computer: Technologies

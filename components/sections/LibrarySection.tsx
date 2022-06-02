@@ -12,7 +12,6 @@ export const LibrarySection = () => {
   const [sortBy, setSortBy] = useState("none");
   const {comics, size, setSize, isLoading} = useComics(
     `/comics?character=${characterFilter}&publisher=${publisherFilter}`,
-
     sortBy,
   );
 

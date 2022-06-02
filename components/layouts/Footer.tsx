@@ -7,7 +7,7 @@ export const Footer = () => {
       <div className="flex justify-around gap-4 px-6 py-6 uppercase md:px-10 lg:px-14">
         <div className="flex flex-col justify-between gap-4 sm:gap-10 md:gap-20 sm:flex-row">
           <div className="flex flex-col gap-4">
-            <Link href="/library" passHref prefetch={false}>
+            <Link href="/" passHref prefetch={false}>
               <a className="text-xs md:text-sm">Librería</a>
             </Link>
             <Link href="/dc-comics" passHref prefetch={false}>

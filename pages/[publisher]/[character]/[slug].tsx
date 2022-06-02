@@ -77,7 +77,6 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
     props: {
       comic,
     },
-    // revalidate: 86400,
-    revalidate: 600,
+    revalidate: 86400,
   };
 };

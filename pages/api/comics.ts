@@ -1,8 +1,7 @@
 import type {NextApiRequest, NextApiResponse} from "next";
-import {COMICS_CONSTANTS, db} from "../../../database";
-import {IComic} from "../../../interfaces";
-import {Character, Comic, Publisher} from "../../../models";
-import {characterQueryToName, publisherQueryToName} from "../../../utils";
+import {db} from "../../database";
+import {IComic} from "../../interfaces";
+import {Character, Comic, Publisher} from "../../models";
 
 type Data =
   | {
@@ -29,8 +28,6 @@ const getComics = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
   await db.connect();
 
-  let comicsFromDB: IComic[] = [];
-
   if (character !== "all") {
     const characterName = await Character.findOne({slug: character});
     condition = {...condition, character: characterName?.name};
@@ -41,10 +38,10 @@ const getComics = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     condition = {...condition, publisher: publisherName?.name};
   }
 
-  comicsFromDB = await Comic.find(condition)
+  const comicsFromDB = await Comic.find(condition)
     .select("title slug images inStock publisher character price -_id")
     .limit(9)
-    .skip(9 * (Number(req.query.page) - 1))
+    .skip(9 * (Number(page) - 1))
     .lean();
 
   await db.disconnect();
