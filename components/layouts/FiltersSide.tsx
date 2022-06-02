@@ -1,5 +1,12 @@
+import {FC, useState} from "react";
+import {CloseOutlined, RemoveOutlined, AddOutlined} from "@mui/icons-material";
 import {AnimatePresence, motion} from "framer-motion";
-import {useState} from "react";
+
+import {
+  characterNameToQuery,
+  publisherNameToQuery,
+  query,
+} from "../../utils/index";
 
 const modalVariants = {
   hidden: {
@@ -24,51 +31,59 @@ const modalVariants = {
   },
 };
 
-const publishers = ["DC Comics", "Marvel Comics", "Image Comics"];
+interface Props {
+  publishers: string[];
+  characters: string[];
+  setCharacterFilter: (characterFilter: string) => void;
+  setPublisherFilter: (publisherFilter: string) => void;
+}
 
-const characters = [
-  "Batman",
-  "Catwoman",
-  "Flash",
-  "Hulk",
-  "Ironman",
-  "Spiderman",
-  "Superman",
-  "Wolverine",
-];
-
-export const FiltersSide = () => {
+export const FiltersSide: FC<Props> = ({
+  publishers,
+  characters,
+  setCharacterFilter,
+  setPublisherFilter,
+}) => {
   const [isPublisherOpen, setIsPublisherOpen] = useState(false);
   const [isCharacterOpen, setIsCharacterOpen] = useState(false);
 
-  const [characterSelected, setCharacterSelected] = useState("");
-  const [publisherSelected, setPublisherSelected] = useState("");
+  const [characterSelected, setCharacterSelected] = useState("all");
+  const [publisherSelected, setPublisherSelected] = useState("all");
 
   const handleCharacterSelect = (value: string) => {
     if (value === characterSelected) {
-      return setCharacterSelected("");
+      setCharacterFilter("all");
+      return setCharacterSelected("all");
     }
+
     setCharacterSelected(value);
+    setCharacterFilter(query.character(value));
   };
 
   const handlePublisherSelect = (value: string) => {
     if (value === publisherSelected) {
+      setPublisherFilter("all");
       return setPublisherSelected("");
     }
     setPublisherSelected(value);
+    setPublisherFilter(query.publisher(value));
   };
 
   return (
     <aside className="flex flex-col gap-2 pt-4 pr-5 uppercase">
-      <span className="mb-4">Filters</span>
+      <span className="mb-4">Filtros</span>
       <div>
         <div className="flex items-baseline justify-between mb-4">
-          <span>Publisher</span>
+          <span>Editoriales</span>
           <button
             className="text-2xl"
             onClick={() => setIsPublisherOpen(!isPublisherOpen)}
           >
-            {isPublisherOpen ? "-" : "+"}
+            {isPublisherOpen ? (
+              <RemoveOutlined className="w-4 h-4" />
+            ) : (
+              <AddOutlined className="w-4 h-4" />
+            )}
           </button>
         </div>
         <AnimatePresence>
@@ -107,12 +122,16 @@ export const FiltersSide = () => {
       </div>
       <div>
         <div className="flex items-baseline justify-between mb-4">
-          <span>Characters</span>
+          <span>Personajes</span>
           <button
             className="text-2xl"
             onClick={() => setIsCharacterOpen(!isCharacterOpen)}
           >
-            {isCharacterOpen ? "-" : "+"}
+            {isCharacterOpen ? (
+              <RemoveOutlined className="w-4 h-4" />
+            ) : (
+              <AddOutlined className="w-4 h-4" />
+            )}
           </button>
         </div>
         <AnimatePresence>

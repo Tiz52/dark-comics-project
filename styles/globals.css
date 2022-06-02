@@ -4,30 +4,110 @@
 
 @layer base {
 
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    line-height: 1.5;
+    box-sizing: border-box;
+    text-rendering: geometricprecision;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
   body {
     margin: 0;
     scroll-behavior: smooth;
     @apply bg-primary;
     @apply text-tertiary;
-    @apply font-sans;
+    @apply font-paragraph;
+  }
+  
+  input:focus-within ~ label,
+  input:not(:placeholder-shown) ~ label {
+    @apply transform scale-75 -translate-y-4;
+  }
+  input:not(:focus-within) ~ label {
+    @apply duration-300 transform scale-75;
+  }
+  input:placeholder-shown ~ label {
+    @apply duration-300 transform scale-75 translate-y-0;
+  }
+  input:focus ~ label {
+    @apply duration-300 transform scale-75 -translate-y-4;
+  }
+  
+  input:-webkit-autofill:not(:placeholder-shown) ~ label, 
+  input:-webkit-autofill:focus-within  ~ label, 
+  input:-webkit-autofill:placeholder-shown ~ label, 
+  input:-webkit-autofill:not(:focus-within) ~ label, 
+  input:-webkit-autofill:focus  ~ label, 
+  input:-webkit-autofill:hover  ~ label, 
+  input:-webkit-autofill ~ label {
+    @apply transform scale-75 -translate-y-4;
   }
 
+/* Change Autocomplete styles in Chrome*/  
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover, 
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+    @apply border-tertiary;
+    -webkit-text-fill-color: #DFDFDF;
+    transition: background-color 5000s ease-in-out 0s;
+  } 
+
+
   @font-face {
-    font-family: "Univers";
-    src: url("/fonts/UniversBlack.ttf") format('embedded-opentype');
+    font-family: 'Monument Extended';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Monument Extended'), url('https://fonts.cdnfonts.com/s/19595/MonumentExtended-Regular.woff') format('woff');
   }
   @font-face {
-    font-family: "Univers";
-    src: url("/fonts/UniversLTStd-Bold.otf") format("opentype");
+      font-family: 'Monument Extended';
+      font-style: normal;
+      font-weight: 800;
+      src: local('Monument Extended'), url('https://fonts.cdnfonts.com/s/19595/MonumentExtended-Ultrabold.woff') format('woff');
   }
+  
   @font-face {
-    font-family: "Univers";
-    src: url("/fonts/UniversLTStd.otf") format("opentype");
-  }
-  @font-face {
-    font-family: "Univers";
-    src: url("/fonts/Univers-light-normal.ttf") format('embedded-opentype');
+    font-family: Inter;
+    font-weight: 100 900;
+    font-display: block;
+    font-style: italic;
+    font-named-instance: 'Italic';
+    src: url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap') format("ttf");
   }
 
+}
+
+@layer components {
+  .icon {
+    @apply flex items-center justify-center w-6 h-6 transition ease-out rounded-full cursor-pointer hover:bg-tertiary hover:text-white hover:bg-opacity-10;
+  }
+
+}
+
+/* Material UI select */
+.MuiDataGrid-root .MuiDataGrid-cell:focus-within {
+  outline: none !important;
+}
+
+.fadeIn {
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
 }

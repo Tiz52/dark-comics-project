@@ -7,6 +7,12 @@ module.exports = {
   ],
   theme: {
     extend: {
+      height: {
+        main: "calc(100vh - 196px)",
+      },
+      minHeight: {
+        main: "calc(100vh - 196px)",
+      },
       screens: {
         xs: "480px",
         ...defaultTheme.screens,
@@ -19,13 +25,15 @@ module.exports = {
         shadow: "#535353",
       },
       fontFamily: {
-        universe: ["Univers", "sans-serif"],
+        headline: ["Monument Extended", "sans-serif"],
+        paragraph: ["Inter", "sans-serif"],
       },
       gridTemplateColumns: {
-        list: "repeat(auto-fill, minmax(200px, 1fr))",
+        list: "repeat(auto-fill, minmax(180px, 1fr))",
+        dashboardCard: "repeat(auto-fill, minmax(240px, 1fr))",
       },
       gridTemplateRows: {
-        list: "repeat(auto-fill, minmax(200px, 1fr))",
+        list: "repeat(auto-fill, minmax(180px, 1fr))",
       },
     },
   },

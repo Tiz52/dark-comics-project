@@ -1,17 +1,19 @@
-import type {NextPage} from "next";
+import {TransitionBox} from "../components/commons";
 import {PageLayout} from "../components/layouts";
-import {CarouselSection} from "../components/sections";
+import {LibrarySection} from "../components/sections";
 
-const HomePage: NextPage = () => {
+const HomePage = () => {
   return (
-    <PageLayout>
-      <div className="flex flex-col gap-32 px-6 pt-10 md:px-10 lg:px-14">
-        <CarouselSection section="novelties" />
-        <CarouselSection section="bestsellers" />
-        <CarouselSection section="discounts" />
+    <PageLayout
+      title="Dark Cómics."
+      pageDescription="Encuentra los mejores cómics aquí"
+    >
+      <div className="flex flex-col items-center gap-4 px-5 py-6 md:px-10 lg:px-14 min-h-main">
+        <TransitionBox />
+        <h1 className="text-2xl font-headline md:text-4xl">Cómics</h1>
+        <LibrarySection />
       </div>
     </PageLayout>
   );
 };
-
 export default HomePage;

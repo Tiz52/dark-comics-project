@@ -42,33 +42,34 @@ const buttonVariants = {
 };
 
 interface Props {
-  // options: string[];
-  // option?: string;
-  // setOption: (value: string) => void;
+  value: string;
+  options: string[];
+  onChange: (value: string) => void;
 }
 
-const options = ["Title", "Price", "Release"];
-
-export const Select: FC<Props> = ({}) => {
-  const [isSortByOpen, SetIsSortByOpen] = useState(false);
-  const [isDesc, setIsDesc] = useState(true);
+export const Select: FC<Props> = ({onChange, options, value}) => {
+  const [isOpen, setIsOpen] = useState(false);
   const controls = useAnimation();
 
-  const handleSortBy = () => {
-    // setOption(value);
-    if (isDesc) controls.start("rotateUp");
-    else controls.start("rotateDown");
-    setIsDesc(!isDesc);
-    SetIsSortByOpen(!isSortByOpen);
+  const handleSelect = () => {
+    setIsOpen(!isOpen);
+    if (isOpen) controls.start("rotateDown");
+    else controls.start("rotateUp");
+  };
+
+  const handleOptionClick = (value: string) => {
+    onChange(value);
+    setIsOpen(false);
+    controls.start("rotateDown");
   };
 
   return (
-    <div className="relative py-2">
+    <div className="relative w-full py-2">
       <button
-        className="flex items-center gap-2 hover:text-white"
-        onClick={handleSortBy}
+        className="flex items-center justify-between w-full gap-2 hover:text-white"
+        onClick={handleSelect}
       >
-        <span className="uppercase">Sort By</span>
+        <span className="uppercase">{value}</span>
         <motion.div animate={controls} variants={buttonVariants}>
           <motion.svg
             xmlns="http://www.w3.org/2000/svg"
@@ -88,24 +89,26 @@ export const Select: FC<Props> = ({}) => {
         <span className="sr-only">Prev</span>
       </button>
       <AnimatePresence>
-        {isSortByOpen && (
-          <motion.div
-            className="absolute right-0 z-20 flex flex-col items-start w-32 bg-quaternary top-12"
-            variants={modalVariants}
-            initial="hidden"
-            animate="show"
-            exit="exit"
-          >
-            {options.map((option) => (
-              <button
-                key={option}
-                className="w-full py-[14px] px-5 text-xs text-left uppercase transition duration-300 ease-in-out hover:bg-shadow"
-                // onClick={() => handleOptionClick(option)}
-              >
-                <span className="h-7">{option}</span>
-              </button>
-            ))}
-          </motion.div>
+        {isOpen && (
+          <div>
+            <motion.div
+              className="absolute right-0 z-20 flex flex-col items-start w-full border-2 divide-y-2 divide-quaternary/10 border-quaternary/10 bg-tertiary top-12"
+              variants={modalVariants}
+              initial="hidden"
+              animate="show"
+              exit="exit"
+            >
+              {options.map((option) => (
+                <button
+                  key={option}
+                  className="w-full py-[14px] px-5 text-xs text-left uppercase transition hover:text-white  duration-300 ease-in-out hover:bg-shadow"
+                  onClick={() => handleOptionClick(option)}
+                >
+                  <span className="h-7">{option}</span>
+                </button>
+              ))}
+            </motion.div>
+          </div>
         )}
       </AnimatePresence>
     </div>

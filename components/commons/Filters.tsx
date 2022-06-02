@@ -1,5 +1,6 @@
 import {AnimatePresence, motion, useAnimation} from "framer-motion";
 import {FC, useState} from "react";
+import {characterNameToQuery, publisherNameToQuery} from "../../utils";
 
 const modalVariants = {
   hidden: {
@@ -42,26 +43,18 @@ const buttonVariants = {
 };
 
 interface Props {
-  // title: string;
-  // options: string[];
-  // option?: string;
-  // setOption: (value: string) => void;
+  publishers: string[];
+  characters: string[];
+  setCharacterFilter: (characterFilter: string) => void;
+  setPublisherFilter: (publisherFilter: string) => void;
 }
 
-const publishers = ["DC Comics", "Marvel Comics", "Image Comics"];
-
-const characters = [
-  "Batman",
-  "Catwoman",
-  "Flash",
-  "Hulk",
-  "Ironman",
-  "Spiderman",
-  "Superman",
-  "Wolverine",
-];
-
-export const Filters: FC<Props> = () => {
+export const Filters: FC<Props> = ({
+  publishers,
+  characters,
+  setCharacterFilter,
+  setPublisherFilter,
+}) => {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isDesc, setIsDesc] = useState(true);
   const controls = useAnimation();
@@ -74,23 +67,23 @@ export const Filters: FC<Props> = () => {
 
   const handleCharacterSelect = (value: string) => {
     if (value === characterSelected) {
-      return setCharacterSelected("");
+      setCharacterFilter("all");
+      setIsFiltersOpen(!isFiltersOpen);
+      return setCharacterSelected("all");
     }
+
     setCharacterSelected(value);
+    setCharacterFilter(characterNameToQuery(value));
   };
 
   const handlePublisherSelect = (value: string) => {
     if (value === publisherSelected) {
+      setPublisherFilter("all");
       return setPublisherSelected("");
     }
     setPublisherSelected(value);
+    setPublisherFilter(publisherNameToQuery(value));
   };
-
-  const handleOptionClick = (value: string) => {
-    // setOption(value);
-    setIsFiltersOpen(false);
-  };
-
   const handleFilters = () => {
     if (isDesc) controls.start("rotateUp");
     else controls.start("rotateDown");
@@ -106,7 +99,7 @@ export const Filters: FC<Props> = () => {
         className="flex items-center gap-2 hover:text-white"
         onClick={handleFilters}
       >
-        <span className="uppercase">Filters</span>
+        <span className="uppercase">Filtros</span>
         <motion.div animate={controls} variants={buttonVariants}>
           <motion.svg
             xmlns="http://www.w3.org/2000/svg"
@@ -137,7 +130,7 @@ export const Filters: FC<Props> = () => {
             {/* Publisher filter */}
             <div className="w-full px-2 py-2">
               <div className="flex items-baseline justify-between text-xs uppercase">
-                <span>Publisher</span>
+                <span>Editoriales</span>
                 <button
                   onClick={() => setIsPublisherOpen(!isPublisherOpen)}
                   className="text-xl cursor-pointer w-7 h-7 hover:text-white"
@@ -175,7 +168,7 @@ export const Filters: FC<Props> = () => {
             {/* Character filter */}
             <div className="w-full px-2 py-2">
               <div className="flex items-baseline justify-between text-xs uppercase">
-                <span>Characters</span>
+                <span>Personajes</span>
                 <button
                   onClick={() => setIsCharacterOpen(!isCharacterOpen)}
                   className="text-xl cursor-pointer w-7 h-7 hover:text-white"

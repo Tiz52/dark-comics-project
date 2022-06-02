@@ -3,6 +3,8 @@ import Swipe from "react-easy-swipe";
 import {IComic} from "../../interfaces";
 import {ComicCard} from "../comics";
 
+const GAP_WIDTH = 128;
+
 interface Props {
   comics: IComic[];
 }
@@ -11,8 +13,6 @@ export const Carousel: FC<Props> = ({comics}) => {
   const maxScrollWidth = useRef(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const carousel = useRef<HTMLDivElement>(null);
-
-  let width = `w-[${100 / comics.length}%] `;
 
   const movePrev = () => {
     if (currentIndex <= 0) {
@@ -32,7 +32,8 @@ export const Carousel: FC<Props> = ({comics}) => {
 
   useEffect(() => {
     if (carousel !== null && carousel.current !== null) {
-      carousel.current.scrollLeft = carousel.current.offsetWidth * currentIndex;
+      carousel.current.scrollLeft =
+        carousel.current.offsetWidth * currentIndex + GAP_WIDTH * currentIndex;
     }
   }, [currentIndex]);
 
@@ -44,7 +45,7 @@ export const Carousel: FC<Props> = ({comics}) => {
 
   return (
     <div className="w-full my-12">
-      <div className="flex gap-10">
+      <div className="flex w-full gap-10">
         <button
           onClick={movePrev}
           className="hidden w-10 text-center transition-all duration-300 ease-in-out xs:block text-tertiary hover:text-white disabled:opacity-25"
@@ -69,7 +70,7 @@ export const Carousel: FC<Props> = ({comics}) => {
         <Swipe
           onSwipeLeft={moveNext}
           onSwipeRight={movePrev}
-          className="z-10 overflow-hidden"
+          className="z-10 flex-auto overflow-hidden"
         >
           <div
             ref={carousel}
@@ -78,7 +79,7 @@ export const Carousel: FC<Props> = ({comics}) => {
             {comics.map((comic, index) => (
               <div
                 key={index}
-                className="shrink-0 w-[calc(100vw-48px)] xs:w-[250px] snap-start"
+                className="shrink-0 w-[calc(100vw-48px)] xs:w-[250px] snap-start "
               >
                 <ComicCard comic={comic} />
               </div>
