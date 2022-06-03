@@ -7,38 +7,24 @@ import {Loading} from "../../../components/ui";
 import {dbComics} from "../../../database";
 import {useComics} from "../../../hooks";
 import {IComic} from "../../../interfaces";
-import {characterNameToQuery, query} from "../../../utils/index";
+import {query} from "../../../utils/index";
 
 interface Props {
   comic: IComic;
+  moreSimilarComics: IComic[];
 }
 
-const ComicPage: FC<Props> = ({comic}) => {
-  // const {comics, isLoading} = useComics(
-  //   `/comics?character=${characterNameToQuery(comic.character)}`,
-  // );
-  // const similarComics = isLoading
-  //   ? []
-  //   : comics!.filter((c) => c.slug !== comic.slug);
-
-  // if (!comic) return <Loading />;
-
+const ComicPage: FC<Props> = ({comic, moreSimilarComics}) => {
   return (
     <PageLayout title={comic.title} pageDescription={comic.description[0]}>
       <TransitionBox />
       <div className="flex flex-col gap-12 pb-6 min-h-main">
         <ComicSection comic={comic} />
         <div className="px-6 md:px-10 lg:px-14">
-          {/* {isLoading ? (
-            <div className="flex h-[400px]">
-              <Loading />
-            </div>
-          ) : (
-            <CarouselSection
-              comics={similarComics}
-              section={"más cómics similares"}
-            />
-          )} */}
+          <CarouselSection
+            comics={moreSimilarComics}
+            section={"más cómics similares"}
+          />
         </div>
       </div>
     </PageLayout>
@@ -73,9 +59,16 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
       },
     };
   }
+
+  const moreSimilarComics = await dbComics.getSimilarComics(
+    comic.character,
+    slug,
+  );
+
   return {
     props: {
       comic,
+      moreSimilarComics,
     },
     revalidate: 86400,
   };

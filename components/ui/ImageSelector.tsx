@@ -31,7 +31,7 @@ export const ImageSelector: FC<Props> = ({images}) => {
             objectFit="cover"
             quality={50}
             priority
-            // className="fadeIn"
+            className="fadeIn"
             fallback="https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"
           />
         </div>
@@ -51,7 +51,7 @@ export const ImageSelector: FC<Props> = ({images}) => {
               objectFit="contain"
               quality={50}
               priority
-              // className="fadeIn"
+              className="fadeIn"
               fallback="https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"
             />
           </button>

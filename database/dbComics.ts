@@ -58,3 +58,16 @@ export const getCharactersNames = async () => {
 
   return charactersFromDB;
 };
+
+export const getSimilarComics = async (character: string, slug: string) => {
+  await db.connect();
+  const comics = await Comic.find({
+    character,
+    slug: {$ne: slug},
+  })
+    .select("title publisher character images price inStock slug -_id")
+    .lean();
+  await db.disconnect();
+
+  return comics;
+};
