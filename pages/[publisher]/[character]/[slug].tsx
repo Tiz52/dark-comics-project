@@ -14,14 +14,14 @@ interface Props {
 }
 
 const ComicPage: FC<Props> = ({comic}) => {
-  const {comics, isLoading} = useComics(
-    `/comics?character=${characterNameToQuery(comic.character)}`,
-  );
-  const similarComics = isLoading
-    ? []
-    : comics!.filter((c) => c.slug !== comic.slug);
+  // const {comics, isLoading} = useComics(
+  //   `/comics?character=${characterNameToQuery(comic.character)}`,
+  // );
+  // const similarComics = isLoading
+  //   ? []
+  //   : comics!.filter((c) => c.slug !== comic.slug);
 
-  if (!comic) return <Loading />;
+  // if (!comic) return <Loading />;
 
   return (
     <PageLayout title={comic.title} pageDescription={comic.description[0]}>
@@ -29,7 +29,7 @@ const ComicPage: FC<Props> = ({comic}) => {
       <div className="flex flex-col gap-12 pb-6 min-h-main">
         <ComicSection comic={comic} />
         <div className="px-6 md:px-10 lg:px-14">
-          {isLoading ? (
+          {/* {isLoading ? (
             <div className="flex h-[400px]">
               <Loading />
             </div>
@@ -38,7 +38,7 @@ const ComicPage: FC<Props> = ({comic}) => {
               comics={similarComics}
               section={"más cómics similares"}
             />
-          )}
+          )} */}
         </div>
       </div>
     </PageLayout>
